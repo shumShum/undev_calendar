@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>UndevCalendar</title>
+  <title>Webprak</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "bootstrap", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<style>
+   body {
+    background-image: url(<%= asset_path 'background.png' %>);
+    background-color: #f8f8f8;
+   }
+  </style>
 
 <%= yield %>
 

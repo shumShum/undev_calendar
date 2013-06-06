@@ -1,0 +1,9 @@
+<%= calendar_for(@events) do |t| %>
+  <%= t.head('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс') %>
+  <%= t.day do |day, events| %>
+    <%= day.day %>
+    <% events.each do |event| %>
+      <%= h(event.description) %>
+    <% end %>
+  <% end %>
+<% end %>
