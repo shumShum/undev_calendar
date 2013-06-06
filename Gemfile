@@ -13,9 +13,10 @@ end
 
 gem 'jquery-rails'
 
-gem "watu_table_builder", :require => "table_builder"
-
+gem 'haml-rails'
 gem 'rspec'
+
+gem "watu_table_builder", :require => "table_builder"
 
 # Use unicorn as the app server
 # gem 'unicorn'
