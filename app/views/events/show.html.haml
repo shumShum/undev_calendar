@@ -1,0 +1,10 @@
+.page-header
+	.row	
+		.span4{style: "margin-left: 40px"}
+			%h4 
+				= @event.description
+		.span2{style: "margin-top: 12px"}
+			= link_to "редактировать", edit_event_path(@event)
+		.span1{style: "margin-top: 12px"}
+			= link_to "удалить", @event, method: :delete, :data => { :confirm => "Вы уверены?" }, :style => "color: #ff6666;"
+.span6

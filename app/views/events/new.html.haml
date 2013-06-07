@@ -1,0 +1,25 @@
+.page-header
+	.row	
+		.span4{style: "margin-left: 40px"}
+			%h4 Добавление нового события
+		.span1{style: "margin-top: 12px"}
+			= link_to "назад", root_url
+.span6
+	.row
+		.span2
+			Когда: 
+		.span3
+			= @event.date.strftime("%d.%m.%Y")
+	.row{style: "margin-top: 5px"}
+		= form_for(@event) do |f|
+			.span2
+				Что:
+			.span3
+				= f.text_field :description, placeholder: "Введите описание события"
+				= f.hidden_field :date, value: @event.date
+			.span1.offset2
+				= f.submit "Создать", class: "btn"
+	.row
+		%br
+		.span5
+			= render 'error_messages'
