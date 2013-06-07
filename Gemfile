@@ -17,6 +17,7 @@ gem 'haml-rails'
 gem 'rspec'
 
 gem "watu_table_builder", :require => "table_builder"
+gem 'bootstrap-datepicker-rails'
 
 # Use unicorn as the app server
 # gem 'unicorn'

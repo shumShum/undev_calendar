@@ -1,3 +1,5 @@
+*= require bootstrap-datepicker
+
 #calendar table {
   border-collapse: collapse;
   width: 100%;

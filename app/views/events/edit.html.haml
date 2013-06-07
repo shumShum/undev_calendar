@@ -12,12 +12,11 @@
 			.span2
 				Дата: 
 			.span3
-				= f.text_field :date
+				%input.input-small.datepicker{:type => "text", :name => "date", 'data-behaviour' => 'datepicker'}
 		.row
 			.span2
 				Время: 
 			.span3
-				= f.text_field :date
 		.row
 			.span2
 				Описание события:
