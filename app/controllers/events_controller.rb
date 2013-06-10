@@ -23,6 +23,8 @@ class EventsController < ApplicationController
 
 	def edit
 		@event = Event.find(params[:id])
+		@event.date = @event.date.strftime("%Y-%m-%d")
+		@event.time = @event.time.strftime("%H-%M")
 	end
 
 	def update
