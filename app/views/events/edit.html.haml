@@ -6,23 +6,39 @@
 			= link_to "назад", root_url
 		.span2{style: "margin-top: 12px"}
 			= link_to "удалить событие", @event, method: :delete, :data => { :confirm => "Вы уверены?" }, :style => "color: #ff6666;"
-.span6
+.span10
 	= form_for(@event) do |f|
 		.row
-			.span2
+			.span1
 				Дата: 
-			.span3
-				= f.text_field :date, 'data-behaviour' => 'datepicker', class: "input-small"
-		.row
 			.span2
+				= f.text_field :date, 'data-behaviour' => 'datepicker', class: "input-small"
+			.span1
 				Время: 
-			.span3
-				= f.text_field :time, 'data-behaviour' => 'timepicker', class: "dateselect-time input-small"
+			.span2
+				/ = f.text_field :time, 'data-behaviour' => 'timepicker', class: "input-small"
+				= f.text_field :time, class: "timepicker input-small"
+				%script
+					$('.timepicker').timepicker()
 		.row
 			.span2
 				Описание события:
 			.span3
 				= f.text_field :description, placeholder: "Введите описание события"
+		.row
+			.span2
+				Повторять
+			.span8
+				= select_tag "repeat_of", options_for_select(["по дням недели", "по числам месяца"]) 
+				&nbspкаждые&nbsp
+				- @days_of_week_names.each do |d|
+					- if d[1] == @event.date.strftime("%a")	
+						= check_box_tag "days_of_week[]", d[1], checked: true
+					- else
+						= check_box_tag "days_of_week[]", d[1]
+					= d[0]
+					&nbsp
+		.row
 			.span1.offset2
 				= f.submit "Обновить", class: "btn"
 		.row

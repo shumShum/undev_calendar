@@ -1,7 +1,18 @@
+# encoding: utf-8
 class EventsController < ApplicationController
+
+	DAYS_OF_WEEK_NAMES = [
+		['Пн', 'Mon'], 
+		['Вт', 'Tue'], 
+		['Ср', 'Wed'], 
+		['Чт','Thu'], 
+		['Пт','Fri'], 
+		['Сб','Sat'], 
+		['Вс','Sun']]
 
 	def index
 		@events = Event.all
+		# Event.new(e.as_json.reject{|key| key == "updated_at" || key == "created_at"})
 	end
 
 	def show
@@ -24,7 +35,8 @@ class EventsController < ApplicationController
 	def edit
 		@event = Event.find(params[:id])
 		@event.date = @event.date.strftime("%Y-%m-%d")
-		@event.time = @event.time.strftime("%H-%M")
+		@event.time = @event.time.strftime("%H:%M")
+		@days_of_week_names = DAYS_OF_WEEK_NAMES
 	end
 
 	def update

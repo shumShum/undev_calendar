@@ -6,7 +6,11 @@
 				.row
 					= link_to new_event_path(date: day) do 
 						= day.day
-				- events.each do |event|
+				- events.sort{|x,y| x.time <=> y.time}.each do |event|
 					.row{style: "overflow: hidden"}
+						.event-time
+							.span1
+								= event.time.strftime("%H:%M")
 						.event-link
-							= link_to h(event.description), edit_event_path(event)
+							.span1
+								= link_to h(event.description), edit_event_path(event)
