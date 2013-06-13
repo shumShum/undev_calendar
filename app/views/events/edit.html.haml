@@ -26,18 +26,11 @@
 			.span3
 				= f.text_field :description, placeholder: "Введите описание события"
 		.row
-			.span2
-				Повторять
-			.span8
-				= select_tag "repeat_of", options_for_select(["по дням недели", "по числам месяца"]) 
-				&nbspкаждые&nbsp
-				- @days_of_week_names.each do |d|
-					- if d[1] == @event.date.strftime("%a")	
-						= check_box_tag "days_of_week[]", d[1], checked: true
-					- else
-						= check_box_tag "days_of_week[]", d[1]
-					= d[0]
-					&nbsp
+			#repeat_event
+				.span2	
+					Повторять&nbsp&nbsp
+					= check_box_tag 'test'
+					= render 'repeat_type'
 		.row
 			.span1.offset2
 				= f.submit "Обновить", class: "btn"

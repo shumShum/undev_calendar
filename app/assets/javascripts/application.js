@@ -125,3 +125,21 @@ $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
   };
 
 })( jQuery );
+
+$(function() {
+  $('#repeat_event').on('click', '#test', function(e) {
+    var source;
+    var template;
+    $ch_box = $(this)[0];
+    $gen = $('#repeat_event');
+    if ($ch_box.checked === true) {
+      $gen_def = $gen.clone(true, true).removeClass("repeat_event");
+      source   = $("#repeat-type-template").html();
+      template = Handlebars.compile(source);
+      $gen.append(template());
+      }
+    else {
+      $gen.empty().append($gen_def.html());
+      }
+  });
+});
