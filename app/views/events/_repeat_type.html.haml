@@ -1,5 +1,8 @@
 .span3{style: "height: 18px; margin-left: 0px;"}
-	= select_tag "repeat_of", options_for_select(["по дням недели", "по числам месяца"]), options = {:prompt => "- Выберите тип повторения"} 
+	- if @event.is_repeat && @event.repeat_type.present?
+		= select_tag "repeat_of", options_for_select({"по дням недели" => "week", "по числам месяца" => "month"}, @event.repeat_type)
+	- else
+		= select_tag "repeat_of", options_for_select({"по дням недели" => "week", "по числам месяца" => "month"}), options = {:prompt => "- Выберите тип повторения"} 
 .span5#repeat_type
 	= render partial: 'events/templates/repeat_by_week'
 	= render partial: 'events/templates/repeat_by_month'

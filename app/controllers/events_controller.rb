@@ -12,7 +12,9 @@ class EventsController < ApplicationController
 
 	def index
 		@events = Event.all
-		# Event.new(e.as_json.reject{|key| key == "updated_at" || key == "created_at"})
+		# ev = Event.new(@events[0].as_json.reject{|key| key == "updated_at" || key == "created_at"})
+		# ev[:date] = Date.today
+		# @events << ev
 	end
 
 	def show
@@ -42,6 +44,8 @@ class EventsController < ApplicationController
 
 	def update
 		@event = Event.find(params[:id])
+		@event.repeat_type = params[:repeat_of] 
+		@event.repeat_days = params[:repeat_days].join(" ") if params[:repeat_days].present? 
 		if @event.update_attributes(params[:event])
 			redirect_to root_url
 		else

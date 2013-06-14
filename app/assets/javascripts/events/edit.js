@@ -37,7 +37,7 @@ $(function() {
       }
     else {
       gen.empty().append($gen_def_check.html());
-      
+
       $event.is_repeat = false;
       }
   });
@@ -52,7 +52,7 @@ $(function() {
     if (typeof($gen_def_type) == "undefined") {
       $gen_def_type = gen.clone(true, true);
     }
-    if (sel.value === 'по дням недели') {
+    if (sel.value === 'week') {
       gen.empty().append($gen_def_type.html());
       source   = $("#repeat-week-template").html();
       template = Handlebars.compile(source);
@@ -61,7 +61,7 @@ $(function() {
       $event.repeat_type = "week";
     }
     else {
-      if (sel.value === 'по числам месяца'){
+      if (sel.value === 'month'){
         gen.empty().append($gen_def_type.html());
         source   = $("#repeat-month-template").html();
         template = Handlebars.compile(source);
@@ -76,6 +76,18 @@ $(function() {
     }
   });
 });
+
+// $(function() {
+// 	$('#commit_event').on('click', ".btn", function() {
+// 		get_week_days();
+// 		$.ajax({
+// 	    url: '/',
+// 	    type: 'PUT',
+// 	    data: $event,
+// 	    dataType: 'json'
+// 	  });
+// 	});
+// });
 
 function get_week_days(){
 	var ch_box = $(this)[0];
