@@ -32,9 +32,9 @@
 					= check_box_tag 'test'
 					= render 'repeat_type'
 		.row
-			.span1.offset2
+			%br
+			.span12.offset3
 				= f.submit "Обновить", class: "btn"
 		.row
-			%br
-			.span5
+			.span5.offset1
 				= render 'error_messages'

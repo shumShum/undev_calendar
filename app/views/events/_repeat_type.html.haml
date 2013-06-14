@@ -1,3 +1,7 @@
 %script#repeat-type-template{type: "text/x-handlebars-template"}
-	.span8
-		= select_tag "repeat_of", options_for_select(["по дням недели", "по числам месяца"]) 
+	.span3{style: "height: 20px;"}
+		= select_tag "repeat_of", options_for_select(["по дням недели", "по числам месяца"]), options = {:prompt => "- Выберите тип повторения"} 
+	.span5
+		#repeat_type
+			= render 'repeat_by_week'
+			= render 'repeat_by_month'

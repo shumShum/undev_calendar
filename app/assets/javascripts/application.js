@@ -130,16 +130,60 @@ $(function() {
   $('#repeat_event').on('click', '#test', function(e) {
     var source;
     var template;
-    $ch_box = $(this)[0];
-    $gen = $('#repeat_event');
-    if ($ch_box.checked === true) {
-      $gen_def = $gen.clone(true, true).removeClass("repeat_event");
+    var gen = $('#repeat_event');
+    var ch_box = $(this)[0];
+    if (ch_box.checked === true) {
+      $gen_def_check = gen.clone(true, true);
       source   = $("#repeat-type-template").html();
       template = Handlebars.compile(source);
-      $gen.append(template());
+      gen.append(template());
       }
     else {
-      $gen.empty().append($gen_def.html());
+      gen.empty().append($gen_def_check.html());
       }
   });
 });
+
+$(function() {
+  $('#repeat_event').on('change', '#repeat_of', function(e) {
+    var source;
+    var template;
+    var sel = $(this)[0];
+    var gen = $('#repeat_type');
+    if (typeof($gen_def_type) == "undefined") {
+      $gen_def_type = gen.clone(true, true);
+    }
+    if (sel.value === 'по дням недели') {
+      gen.empty().append($gen_def_type.html());
+      source   = $("#repeat-week-template").html();
+      template = Handlebars.compile(source);
+      gen.append(template());
+    }
+    else {
+      if (sel.value === 'по числам месяца'){
+        gen.empty().append($gen_def_type.html());
+        source   = $("#repeat-month-template").html();
+        template = Handlebars.compile(source);
+        gen.append(template());
+      }
+      else {
+        gen.empty().append($gen_def_type.html());
+      }
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
