@@ -202,7 +202,13 @@ $(function() {
       });
     }
     else {
-
+      $.ajax({
+        url: 'del_repeat_day',
+        type: 'POST',
+        data: {day: ch_box.value},
+        dataType: 'json',
+        async: true,
+      });
     }
   });
 });

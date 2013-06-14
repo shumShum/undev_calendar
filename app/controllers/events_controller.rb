@@ -55,7 +55,12 @@ class EventsController < ApplicationController
 	def new_repeat_day
 		@event = Event.find(params[:event_id])
 		@event.add_repeat_day(params[:day])
-		redirect_to edit_event_path(@event)
+		render nothing: true
 	end
 
+	def del_repeat_day
+		@event = Event.find(params[:event_id])
+		@event.del_repeat_day(params[:day])
+		render nothing: true
+	end
 end

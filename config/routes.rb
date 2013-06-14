@@ -5,6 +5,7 @@ UndevCalendar::Application.routes.draw do
 
   resources :events do
     post :new_repeat_day
+    post :del_repeat_day
   end
 
 end
