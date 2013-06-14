@@ -1,10 +1,7 @@
-%script#repeat-week-template{type: "text/x-handlebars-template"}
+#day_of_week
 	&nbspкаждые&nbsp
 	- if @days_of_week_names.present?
 		- @days_of_week_names.each do |d|	
-			- if d[1] == @event.date.strftime("%a")
-				= check_box_tag "days_of_week[]", d[1], checked: true
-			- else
-				= check_box_tag "days_of_week[]", d[1]
+			= check_box_tag "repeat_days", d[1]
 			= d[0]
 			&nbsp

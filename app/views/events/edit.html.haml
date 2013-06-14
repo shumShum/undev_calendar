@@ -6,7 +6,7 @@
 			= link_to "назад", root_url
 		.span2{style: "margin-top: 12px"}
 			= link_to "удалить событие", @event, method: :delete, :data => { :confirm => "Вы уверены?" }, :style => "color: #ff6666;"
-.span10
+.span11
 	= form_for(@event) do |f|
 		.row
 			.span1
@@ -29,8 +29,9 @@
 			#repeat_event
 				.span2	
 					Повторять&nbsp&nbsp
-					= check_box_tag 'test'
-					= render 'repeat_type'
+					= f.check_box  :is_repeat
+				.span9#repeat_check
+					= render partial: 'events/templates/repeat_type'
 		.row
 			%br
 			.span12.offset3

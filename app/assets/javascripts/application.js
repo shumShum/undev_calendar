@@ -127,13 +127,16 @@ $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
 })( jQuery );
 
 $(function() {
-  $('#repeat_event').on('click', '#test', function(e) {
+  $('#repeat_event').on('click', '#event_is_repeat', function(e) {
     var source;
     var template;
-    var gen = $('#repeat_event');
+    var gen = $('#repeat_check');
     var ch_box = $(this)[0];
-    if (ch_box.checked === true) {
+    if (typeof($gen_def_check) == "undefined") {
       $gen_def_check = gen.clone(true, true);
+    }
+    if (ch_box.checked === true) {
+      // $gen_def_check = gen.clone(true, true);
       source   = $("#repeat-type-template").html();
       template = Handlebars.compile(source);
       gen.append(template());
@@ -169,6 +172,37 @@ $(function() {
       else {
         gen.empty().append($gen_def_type.html());
       }
+    }
+  });
+});
+
+$(document).ready(function(e) {
+  var source;
+  var template;
+  if (typeof($('#event_is_repeat')[0]) != "undefined") {
+    if ($('#event_is_repeat')[0].checked === true) {
+      $gen_def_check = $('#repeat_check').clone(true, true);
+      source   = $("#repeat-type-template").html();
+      template = Handlebars.compile(source);
+      $('#repeat_check').append(template());
+    }
+  }
+});
+
+$(function() {
+  $('#repeat_event').on('click', '#repeat_days', function(e){
+    var ch_box = $(this)[0];
+    if (ch_box.checked === true) {
+      $.ajax({
+        url: 'new_repeat_day',
+        type: 'POST',
+        data: {day: ch_box.value},
+        dataType: 'json',
+        async: true,
+      });
+    }
+    else {
+
     }
   });
 });

@@ -13,4 +13,5 @@
 								= event.time.strftime("%H:%M")
 						.event-link
 							.span1
-								= link_to h(event.description), edit_event_path(event)
+								%nobr
+									= link_to h(event.description), edit_event_path(event)

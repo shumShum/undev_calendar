@@ -1,7 +1,5 @@
-%script#repeat-type-template{type: "text/x-handlebars-template"}
-	.span3{style: "height: 20px;"}
-		= select_tag "repeat_of", options_for_select(["по дням недели", "по числам месяца"]), options = {:prompt => "- Выберите тип повторения"} 
-	.span5
-		#repeat_type
-			= render 'repeat_by_week'
-			= render 'repeat_by_month'
+.span3{style: "height: 18px;"}
+	= select_tag "repeat_of", options_for_select(["по дням недели", "по числам месяца"]), options = {:prompt => "- Выберите тип повторения"} 
+.span5#repeat_type
+	= render partial: 'events/templates/repeat_by_week'
+	= render partial: 'events/templates/repeat_by_month'

@@ -52,4 +52,10 @@ class EventsController < ApplicationController
 		redirect_to root_url if Event.find(params[:id]).destroy
 	end
 
+	def new_repeat_day
+		@event = Event.find(params[:event_id])
+		@event.add_repeat_day(params[:day])
+		redirect_to edit_event_path(@event)
+	end
+
 end
