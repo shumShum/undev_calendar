@@ -37,6 +37,7 @@ class EventsController < ApplicationController
 		@event.date = @event.date.strftime("%Y-%m-%d")
 		@event.time = @event.time.strftime("%H:%M")
 		@days_of_week_names = DAYS_OF_WEEK_NAMES
+		gon.rabl
 	end
 
 	def update

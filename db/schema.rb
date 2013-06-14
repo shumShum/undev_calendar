@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614101845) do
+ActiveRecord::Schema.define(:version => 20130614212747) do
 
   create_table "events", :force => true do |t|
     t.datetime "date"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20130614101845) do
     t.time     "time",        :default => '2000-01-01 00:00:00'
     t.boolean  "is_repeat",   :default => false
     t.string   "repeat_days"
+    t.string   "repeat_type"
   end
 
 end

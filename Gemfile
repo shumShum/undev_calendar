@@ -22,6 +22,11 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'rspec'
 
+gem 'gon'
+gem 'rabl-rails'
+gem 'oj'
+gem 'js-model-rails'
+
 gem "watu_table_builder", :require => "table_builder"
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-timepicker-rails'

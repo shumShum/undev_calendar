@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Event < ActiveRecord::Base
-  attr_accessible :description, :date, :time, :is_repeat, :repeat_days
+  attr_accessible :description, :date, :time, :is_repeat, :repeat_days, :repeat_type
 
   validates :description, presence: true
   validates :date, presence: true
