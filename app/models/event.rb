@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   validates :date, presence: true
   validates :time, presence: true
 
-  # before_save :check_repeat
+  before_save :check_repeat
 
   def add_repeat_day(day)
   	if repeat_days.present?

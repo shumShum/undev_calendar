@@ -12,9 +12,29 @@ class EventsController < ApplicationController
 
 	def index
 		@events = Event.all
-		# ev = Event.new(@events[0].as_json.reject{|key| key == "updated_at" || key == "created_at"})
-		# ev[:date] = Date.today
-		# @events << ev
+		repeat_events = []
+		@events.select{|x| x.is_repeat}.each do |e|
+			if e.repeat_days.present?
+				repeat_days = e.repeat_days.split(' ')
+				repeat_days.each do |d|
+					if e.repeat_type == "week"
+						d_w = (Date::ABBR_DAYNAMES.index(d) - Date.new(2013,6).wday)%7 + 1
+						n_d = Date.new(2013,6,d_w)
+						[n_d - 1.week, n_d, n_d + 1.week, n_d + 2.week, n_d + 3.week, n_d + 4.week].each do |dm|
+							if dm > e.date.to_date 
+								rep_event = Event.new(e.as_json.reject{|key| key == "updated_at" || key == "created_at"})
+								rep_event[:id] = e.id
+								rep_event[:date] = dm
+								repeat_events.push rep_event 
+							end
+						end
+					end
+					if e.repeat_type == "month"
+					end
+				end
+			end
+		end
+		@events = @events + repeat_events
 	end
 
 	def show

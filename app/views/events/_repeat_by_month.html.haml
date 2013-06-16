@@ -1,1 +1,14 @@
-каждые&nbsp
+#day_of_month
+	каждые&nbsp
+	- if @event.repeat_type == "month" && @event.repeat_days.present?
+		#repeat_days
+			= @event.repeat_days.split(' ').join(', ')
+	= number_field_tag "new_number", @event.date.day, min: 1, max: 31, style: "width: 40px"
+	.btn.btn-small#add_day_btn{style: "margin-bottom: 10px"}
+		Добавить
+	%script
+		$('#day_of_month').on('click', '.btn', function(e) {
+		gon.event.repeat_days = gon.event.repeat_days + ' ' + $('#new_number')[0].value
+		$('#repeat_days').empty().append(gon.event.repeat_days) 
+		});
+

@@ -11,6 +11,20 @@ $(document).ready(function(e) {
       source   = $("#repeat-type-template").html();
       template = Handlebars.compile(source);
       $('#repeat_check').append(template());
+
+      if ($('#repeat_of')[0].value === "week") {
+        $gen_def_type = $('#repeat_type').clone(true, true);
+        source   = $("#repeat-week-template").html();
+        template = Handlebars.compile(source);
+        $('#repeat_type').append(template());
+      }
+      if ($('#repeat_of')[0].value === "month") {
+        $gen_def_type = $('#repeat_type').clone(true, true);
+        source   = $("#repeat-month-template").html();
+        template = Handlebars.compile(source);
+        $('#repeat_type').append(template());
+      }
+
     }
   }
 
@@ -76,6 +90,13 @@ $(function() {
     }
   });
 });
+
+// $(function() {
+//   $('#day_of_month').on('click', '.btn', function(e) {
+//     gon.event.repeat_days = gon.event.repeat_days + ' ' + $('#new_number')[0].value
+//     $('#repeat_days').empty().append(gon.event.repeat_days) 
+//   });
+// });
 
 // $(function() {
 // 	$('#commit_event').on('click', ".btn", function() {
