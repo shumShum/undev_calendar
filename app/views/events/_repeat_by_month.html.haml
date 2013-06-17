@@ -8,7 +8,10 @@
 		= number_field_tag "new_number", @event.date.day, min: 1, max: 31, style: "width: 40px"
 		.btn.btn-small#add_day_btn{style: "margin-bottom: 10px"}
 			Добавить
-		= select_tag "del_number", options_for_select(@event.repeat_days.split(" ")), options = {:prompt => "-", style: "width: 60px"}
+		- if @event.repeat_days.present?
+			= select_tag "del_number", options_for_select(@event.repeat_days.split(" ")), options = {:prompt => "-", style: "width: 60px"}
+		- else
+			= select_tag "del_number", options_for_select([]), options = {:prompt => "-", style: "width: 60px"}
 		.btn.btn-small#del_day_btn{style: "margin-bottom: 10px"}
 			Удалить
 	%script
