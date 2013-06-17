@@ -20,7 +20,7 @@ class EventsController < ApplicationController
 					if e.repeat_type == "week"
 						d_w = (Date::ABBR_DAYNAMES.index(d) - Date.new(2013,6).wday)%7 + 1
 						n_d = Date.new(2013,6,d_w)
-						[n_d - 1.week, n_d, n_d + 1.week, n_d + 2.week, n_d + 3.week, n_d + 4.week].each do |dm|
+						[n_d - 1.week, n_d, n_d + 1.week, n_d + 2.week, n_d + 3.week, n_d + 4.week, n_d + 5.week].each do |dm|
 							if dm > e.date.to_date 
 								rep_event = Event.new(e.as_json.reject{|key| key == "updated_at" || key == "created_at"})
 								rep_event[:id] = e.id
@@ -30,6 +30,13 @@ class EventsController < ApplicationController
 						end
 					end
 					if e.repeat_type == "month"
+						n_d = Date.new(2013,6+1,d.to_i)
+						if n_d > e.date.to_date
+							rep_event = Event.new(e.as_json.reject{|key| key == "updated_at" || key == "created_at"})
+							rep_event[:id] = e.id
+						  rep_event[:date] = n_d
+							repeat_events.push rep_event
+						end
 					end
 				end
 			end
@@ -65,7 +72,8 @@ class EventsController < ApplicationController
 	def update
 		@event = Event.find(params[:id])
 		@event.repeat_type = params[:repeat_of] 
-		@event.repeat_days = params[:repeat_days].join(" ") if params[:repeat_days].present? 
+		@event.repeat_days = params[:repeat_days].join(" ") if params[:repeat_days].present?
+		@event.repeat_days = params[:new_number] if params[:new_number].present? 
 		if @event.update_attributes(params[:event])
 			redirect_to root_url
 		else

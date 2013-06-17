@@ -82,6 +82,7 @@ $(function() {
         gen.append(template());
 
         $event.repeat_type = "month";
+        $event.repeat_days = ""
       }
       else {
         gen.empty().append($gen_def_type.html());
@@ -91,24 +92,15 @@ $(function() {
   });
 });
 
-// $(function() {
-//   $('#day_of_month').on('click', '.btn', function(e) {
-//     gon.event.repeat_days = gon.event.repeat_days + ' ' + $('#new_number')[0].value
-//     $('#repeat_days').empty().append(gon.event.repeat_days) 
-//   });
-// });
-
-// $(function() {
-// 	$('#commit_event').on('click', ".btn", function() {
-// 		get_week_days();
-// 		$.ajax({
-// 	    url: '/',
-// 	    type: 'PUT',
-// 	    data: $event,
-// 	    dataType: 'json'
-// 	  });
-// 	});
-// });
+$(function() {
+	$('#commit_event').on('click', ".btn", function() {
+		if ($event.repeat_type === "month") {
+      $('#new_number')[0].type = "text"
+      $('#new_number')[0].value = gon.event.repeat_days;
+    }
+		
+	});
+});
 
 function get_week_days(){
 	var ch_box = $(this)[0];
@@ -121,6 +113,43 @@ function get_week_days(){
     }
    });
   $event.repeat_days = days_str;
+}
+
+function add_month_repeat(){
+  var arr;
+  var value = $('#new_number')[0].value
+  if (gon.event.repeat_days === "") {
+    arr = [];
+  }
+  else {
+    arr = gon.event.repeat_days.split(" ");
+  }
+  
+  if ((parseInt(value, 10) > 0) && (parseInt(value, 10) < 32)) {
+    if (arr.indexOf(value) === -1) {
+      arr.push(value);
+      gon.event.repeat_days = arr.join(" ");
+      $('#repeat_days').empty().append(arr.join(", "));
+      $('#del_number').append($("<option></option>").text(value));
+    }
+  }
+}
+
+function del_month_repeat() {
+  var arr;
+  var value = $('#del_number')[0].value;
+  arr = gon.event.repeat_days.split(" ");
+  var index = arr.indexOf(value);
+  if (index > -1) {
+    arr.splice(index, 1);
+    gon.event.repeat_days = arr.join(" ");
+    $('#repeat_days').empty().append(arr.join(", "));
+  }
+  // $('#del_number')[0].value = -1;
+  $('#del_number').empty();
+  for (var i = 0; i < arr.length; i++) {
+     $('#del_number').append($("<option></option>").text(arr[i]));
+  }
 }
 
 // $(function() {

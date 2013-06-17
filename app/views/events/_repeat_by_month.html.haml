@@ -1,14 +1,21 @@
 #day_of_month
-	каждые&nbsp
-	- if @event.repeat_type == "month" && @event.repeat_days.present?
+	.span1
+		каждые&nbsp
+	%nobr.span5
 		#repeat_days
-			= @event.repeat_days.split(' ').join(', ')
-	= number_field_tag "new_number", @event.date.day, min: 1, max: 31, style: "width: 40px"
-	.btn.btn-small#add_day_btn{style: "margin-bottom: 10px"}
-		Добавить
+			- if @event.repeat_type == "month" && @event.repeat_days.present?
+				= @event.repeat_days.split(' ').join(', ')
+		= number_field_tag "new_number", @event.date.day, min: 1, max: 31, style: "width: 40px"
+		.btn.btn-small#add_day_btn{style: "margin-bottom: 10px"}
+			Добавить
+		= select_tag "del_number", options_for_select(@event.repeat_days.split(" ")), options = {:prompt => "-", style: "width: 60px"}
+		.btn.btn-small#del_day_btn{style: "margin-bottom: 10px"}
+			Удалить
 	%script
-		$('#day_of_month').on('click', '.btn', function(e) {
-		gon.event.repeat_days = gon.event.repeat_days + ' ' + $('#new_number')[0].value
-		$('#repeat_days').empty().append(gon.event.repeat_days) 
+		$('#day_of_month').on('click', '#add_day_btn', function(e) {
+		add_month_repeat();
+		});
+		$('#day_of_month').on('click', '#del_day_btn', function(e) {
+		del_month_repeat();
 		});
 
