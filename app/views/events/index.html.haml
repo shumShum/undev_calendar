@@ -22,13 +22,22 @@
 	.span1.btn-group
 		%button.btn#month_back
 			- if @month == 1
-				= link_to "<", "/events/#{@year - 1}/12"
+				= link_to "<", "/events/month/#{@year - 1}/12"
 			- else
-				= link_to "<", "/events/#{@year}/#{sprintf '%02d', (@month - 1)}"
+				= link_to "<", "/events/month/#{@year}/#{sprintf '%02d', (@month - 1)}"
 		%button.btn#month_forward
 			- if @month == 12
-				= link_to ">", "/events/#{@year + 1}/01"
+				= link_to ">", "/events/month/#{@year + 1}/01"
 			- else
-				= link_to ">", "/events/#{@year}/#{sprintf '%02d', (@month + 1)}"
+				= link_to ">", "/events/month/#{@year}/#{sprintf '%02d', (@month + 1)}"
 	.span2{style: "margin-top: 7px;"}
 		= "#{@month_names[@month-1]}, #{@year}"
+#time_option
+	.span2.btn-group{"data-toggle" => "buttons-radio"}
+		%button.btn#day_option
+			= link_to "День", "/events/day/#{@year}/#{sprintf '%02d', @month}/01"
+		%button.btn#week_option
+			= link_to "Неделя", "/events/week/#{@year}/#{sprintf '%02d', @month * 4 + 1}"
+		%button.btn#month_option
+			= link_to "Месяц", "/events/month/#{@year}/#{sprintf '%02d', @month}"
+			

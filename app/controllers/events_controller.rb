@@ -70,7 +70,8 @@ class EventsController < ApplicationController
 		end
 		@events = @events + repeat_events
 		@month_names = MONTH_NAMES
-		gon.month = Date.today.month
+		@time_option = "month"
+		gon.time_option = @time_option
 	end
 
 	def show
@@ -84,7 +85,7 @@ class EventsController < ApplicationController
 	def create
 		@event = Event.new(params[:event])
 	  if @event.save
-	    redirect_to root_url
+	    redirect_to "/events/#{@event.date.year}/#{sprintf '%02d', @event.date.month}"
 	  else
 	    render 'new'
 	  end
@@ -113,18 +114,6 @@ class EventsController < ApplicationController
 	def destroy
 		redirect_to root_url if Event.find(params[:id]).destroy
 	end
-
-	# def new_repeat_day
-	# 	@event = Event.find(params[:event_id])
-	# 	@event.add_repeat_day(params[:day])
-	# 	render nothing: true
-	# end
-
-	# def del_repeat_day
-	# 	@event = Event.find(params[:event_id])
-	# 	@event.del_repeat_day(params[:day])
-	# 	render nothing: true
-	# end
 
 	def back_month
 		@month = params[:month].to_i - 1
