@@ -1,37 +1,15 @@
 = content_for :js_link_tags do
+	= javascript_include_tag "handlebars"
 	= javascript_include_tag "events/index"
 #calendar
-	= calendar_for(@events, year: @year, month: @month) do |t|
-		= t.head('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс')
-		= t.day do |day, events|
-			.span2
-				.row
-					= link_to new_event_path(date: day) do 
-						= day.day
-				- events.sort{|x,y| x.time <=> y.time}.each do |event|
-					.row{style: "overflow: hidden"}
-						.event-time
-							.span1
-								= event.time.strftime("%H:%M")
-						.event-link
-							.span1
-								%nobr
-									= link_to h(event.description), edit_event_path(event)
+	= render partial: 'events/templates/calendar/day_cal'
+	= render partial: 'events/templates/calendar/week_cal'
+	= render partial: 'events/templates/calendar/month_cal'
 %br
-#month
-	.span1.btn-group
-		%button.btn#month_back
-			- if @month == 1
-				= link_to "<", "/events/month/#{@year - 1}/12"
-			- else
-				= link_to "<", "/events/month/#{@year}/#{sprintf '%02d', (@month - 1)}"
-		%button.btn#month_forward
-			- if @month == 12
-				= link_to ">", "/events/month/#{@year + 1}/01"
-			- else
-				= link_to ">", "/events/month/#{@year}/#{sprintf '%02d', (@month + 1)}"
-	.span2{style: "margin-top: 7px;"}
-		= "#{@month_names[@month-1]}, #{@year}"
+#navigation
+	= render partial: 'events/templates/navigation/day_nav'
+	= render partial: 'events/templates/navigation/week_nav'
+	= render partial: 'events/templates/navigation/month_nav'
 #time_option
 	.span2.btn-group{"data-toggle" => "buttons-radio"}
 		%button.btn#day_option

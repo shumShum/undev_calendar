@@ -1,0 +1,15 @@
+%script#month-nav-template{type: "text/x-handlebars-template"}
+	#month
+		.span1.btn-group
+			%button.btn#month_back
+				- if @month == 1
+					= link_to "<", "/events/month/#{@year - 1}/12"
+				- else
+					= link_to "<", "/events/month/#{@year}/#{sprintf '%02d', (@month - 1)}"
+			%button.btn#month_forward
+				- if @month == 12
+					= link_to ">", "/events/month/#{@year + 1}/01"
+				- else
+					= link_to ">", "/events/month/#{@year}/#{sprintf '%02d', (@month + 1)}"
+		.span2{style: "margin-top: 7px;"}
+			= "#{@month_names[@month-1]}, #{@year}"

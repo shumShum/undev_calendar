@@ -1,0 +1,17 @@
+%script#month-cal-template{type: "text/x-handlebars-template"}
+	= calendar_for(@events, year: @year, month: @month, first_day_of_week: 1) do |t|
+		= t.head('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс')
+		= t.day do |day, events|
+			.span2
+				.row
+					= link_to new_event_path(date: day) do 
+						= day.day
+				- events.sort{|x,y| x.time <=> y.time}.each do |event|
+					.row{style: "overflow: hidden"}
+						.event-time
+							.span1
+								= event.time.strftime("%H:%M")
+						.event-link
+							.span1
+								%nobr
+									= link_to h(event.description), edit_event_path(event)

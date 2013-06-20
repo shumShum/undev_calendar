@@ -26,16 +26,10 @@ class EventsController < ApplicationController
 	]
 
 	def index
-		if params[:year].present?
-			@year = params[:year].to_i
-		else
-			@year = Date.today.year
-		end
-		if params[:month].present?
-			@month = params[:month].to_i
-		else
-			@month = Date.today.month
-		end
+		params[:year].present? ? @year = params[:year].to_i : @year = Date.today.year
+		params[:month].present? ? @month = params[:month].to_i : @month = Date.today.month
+		params[:day].present? ? @day = params[:day].to_i : @day = Date.today.day
+		@date = Date.new(@year, @month, @day)
 		@events = Event.all
 		repeat_events = []
 		@events.select{|x| x.is_repeat}.each do |e|

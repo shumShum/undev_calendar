@@ -1,0 +1,9 @@
+%script#day-nav-template{type: "text/x-handlebars-template"}
+	#day
+		.span1.btn-group
+			%button.btn#day_back
+				= link_to "<", "/events/day/#{(@date - 1.day).year}/#{sprintf '%02d', (@date - 1.day).month}/#{sprintf '%02d', (@date - 1.day).day}"
+			%button.btn#day_forward
+				= link_to "<", "/events/day/#{(@date + 1.day).year}/#{sprintf '%02d', (@date + 1.day).month}/#{sprintf '%02d', (@date + 1.day).day}"
+		.span2{style: "margin-top: 7px;"}
+			= "#{@date.strftime('%Y-%m-%d')}"
