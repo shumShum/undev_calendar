@@ -1,1 +1,25 @@
 %script#day-cal-template{type: "text/x-handlebars-template"}
+	%table
+		%thead
+			%tr
+				%th
+					.span1
+				%th
+					.span10
+						= "#{@days_of_week_names[@date.wday-1][0]}, #{@date.strftime('%d/%m')}"
+		%tbody
+			- (0..23).to_a.each do |h|
+				%tr
+					%th
+						= "#{sprintf '%02d', h}.00-#{sprintf '%02d', h+1}.00"
+					%th
+						- @events.select{|x| x.time.hour == h}.each do |event|
+							.row{style: "margin-left: 10px"}
+								.event-time
+									.span1
+										= event.time.strftime("%H:%M")
+								.event-link
+									.span1
+										%nobr
+											= link_to h(event.description), edit_event_path(event)
+

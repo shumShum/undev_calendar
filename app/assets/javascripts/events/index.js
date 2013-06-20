@@ -6,7 +6,7 @@ $(document).ready(function(e) {
 	var source;
   var template_nav;
 	if (type === "day") {
-		$('#day_option').css({"border-color" : "#922"});
+		$('#day_option').css({"border-color" : "#889"});
 
 		source   = $("#day-nav-template").html();
     template_nav = Handlebars.compile(source);
@@ -15,7 +15,7 @@ $(document).ready(function(e) {
     template_cal= Handlebars.compile(source);
 	}
 	if (type === "week") {
-		$('#week_option').css({"border-color" : "#922"});
+		$('#week_option').css({"border-color" : "#889"});
 
 		source   = $("#week-nav-template").html();
     template_nav = Handlebars.compile(source);

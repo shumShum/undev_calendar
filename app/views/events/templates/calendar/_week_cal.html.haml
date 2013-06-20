@@ -1,1 +1,10 @@
 %script#week-cal-template{type: "text/x-handlebars-template"}
+	= table_for(@events) do |t|
+		= t.head do
+			= t.r do 
+				= t.h('id')
+				= t.h('description')
+		= t.body do |event|
+			= t.r do 
+				= t.d(h(event.id)) 
+				= t.d(h(event.description)) 
