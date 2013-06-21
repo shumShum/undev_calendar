@@ -11,12 +11,13 @@
 			- (0..23).to_a.each do |h|
 				%tr
 					%th
-						= "#{sprintf '%02d', h}.00-#{sprintf '%02d', h+1}.00"
-					%th
-						- @events.select{|x| x.time.hour == h}.each do |event|
+						= link_to new_event_path(date: @date, time: "#{sprintf '%02d', h}:00)}", time_option: 'day') do
+							= "#{sprintf '%02d', h}.00-#{sprintf '%02d', h+1}.00"
+					%th{style: "background: #FFF"}
+						- @events.select{|x| x.time.hour == h}.sort{|x,y| x.time <=> y.time}.each do |event|
 							.row{style: "margin-left: 10px"}
 								.event-time
-									.span1
+									.span1 
 										= event.time.strftime("%H:%M")
 								.event-link
 									.span1

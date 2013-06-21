@@ -17,6 +17,8 @@
 			.span3
 				= f.text_field :description, placeholder: "Введите описание события"
 				= f.hidden_field :date, value: @event.date
+				= f.hidden_field :time, value: @event.time
+				= hidden_field_tag :time_option, @time_option
 			.span1.offset2
 				= f.submit "Создать", class: "btn"
 	.row

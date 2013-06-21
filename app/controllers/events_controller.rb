@@ -109,13 +109,17 @@ class EventsController < ApplicationController
 	end
 	
 	def new
-		@event = Event.new(date: params[:date])
+		@time_option = params[:time_option]
+		@time = params[:time].present? ? params[:time] : Time.zone.parse("00:00:00")
+		@event = Event.new(date: params[:date], time: @time)
 	end
 
 	def create
 		@event = Event.new(params[:event])
 	  if @event.save
-	    redirect_to "/events/month/#{@event.date.year}/#{sprintf '%02d', @event.date.month}"
+	  	url = "/events/day/#{@event.date.year}/#{sprintf '%02d', @event.date.month}/#{sprintf '%02d', @event.date.day}" if params[:time_option] == 'day'
+	  	url = "/events/month/#{@event.date.year}/#{sprintf '%02d', @event.date.month}" if params[:time_option] == 'month' || !params[:time_option].present?
+	    redirect_to url
 	  else
 	    render 'new'
 	  end
@@ -135,7 +139,7 @@ class EventsController < ApplicationController
 		@event.repeat_days = params[:repeat_days].join(" ") if params[:repeat_days].present?
 		@event.repeat_days = params[:new_number] if params[:new_number].present? 
 		if @event.update_attributes(params[:event])
-			redirect_to root_url
+			redirect_to "/events/month/#{@event.date.year}/#{sprintf '%02d', @event.date.month}"
 		else
 			render 'edit'
 		end
