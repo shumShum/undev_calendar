@@ -1,10 +1,26 @@
 %script#week-cal-template{type: "text/x-handlebars-template"}
-	= table_for(@events) do |t|
-		= t.head do
-			= t.r do 
-				= t.h('id')
-				= t.h('description')
-		= t.body do |event|
-			= t.r do 
-				= t.d(h(event.id)) 
-				= t.d(h(event.description)) 
+	%table
+		%thead
+			%tr
+				%th
+					.span1
+				- @days_of_week_names.each_with_index do |dw, i|
+					%th
+						.span1
+							= "#{dw[0]}, #{(@date+i.day).strftime('%d/%m')}"
+		%tbody
+			- (0..23).to_a.each do |h|
+				%tr
+					%th
+						= "#{sprintf '%02d', h}.00-#{sprintf '%02d', h+1}.00"
+					- @days_of_week_names.each_with_index do |dw, i|
+						%th{style: "background: #FFF"}
+							- @events.select{|x| (x.time.hour == h) && (x.date.to_date == @date+i.day)}.sort{|x,y| x.time <=> y.time}.each do |event|
+								.row{style: "margin-left: 0px"}
+									.event-time
+										.span1 
+											= event.time.strftime("%H:%M")
+									.event-link
+										.span1
+											%nobr
+												= link_to h(event.description), edit_event_path(event)

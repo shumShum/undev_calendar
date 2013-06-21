@@ -15,7 +15,7 @@
 		%button.btn#day_option
 			= link_to "День", "/events/day/#{@year}/#{sprintf '%02d', @month}/01"
 		%button.btn#week_option
-			= link_to "Неделя", "/events/week/#{@year}/#{sprintf '%02d', @month * 4 + 1}"
+			= link_to "Неделя", "/events/week/#{@year}/#{sprintf '%02d', @month * 4}"
 		%button.btn#month_option
 			= link_to "Месяц", "/events/month/#{@year}/#{sprintf '%02d', @month}"
 			

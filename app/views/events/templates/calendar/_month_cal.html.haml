@@ -5,7 +5,7 @@
 			= t.day do |day, events|
 				.span2#day_link{style: "height: 100%;", 
 												onclick: "location.href = '/events/day/#{day.year}/#{sprintf '%02d', day.month}/#{sprintf '%02d', day.day}'", 
-												onmouseover: "$(this).css({'opacity': '0.5', 'cursor' : 'pointer'});", 
+												onmouseover: "$(this).css({'opacity': '0.8', 'cursor' : 'pointer'});", 
 												onmouseout: "$(this).css({'opacity': '1', 'cursor' : 'default'});"}
 					.row
 						= link_to new_event_path(date: day, time_option: 'month') do 
