@@ -26,6 +26,9 @@ class EventsController < ApplicationController
 	]
 
 	def index
+		# нужный календарь отображается в зависимости от параметра time_option;
+		# здесь мы формируем дату, на которую будем ориентироваться при генерации повторения для событий
+		# и вообще при отрисовке календаря
 		time_option = params[:time_option].present? ? params[:time_option] : 'month'
 		params[:year].present? ? @year = params[:year].to_i : @year = Date.today.year
 		unless time_option == 'week'
@@ -43,6 +46,8 @@ class EventsController < ApplicationController
 		@begin_month_date = Date.new(@year, @month)
 		@date = Date.new(@year, @month, @day)
 
+			# в зависимости от типа календаря тянем только события на данный промежуток времени
+			# и всегда повторяющиеся события
 			events = Event.arel_table
 			if time_option == 'month'
 				@events = Event.where(events[:is_repeat].eq(true).or(events[:date].in(@begin_month_date-1.week..@begin_month_date+1.month+1.week))).all
@@ -59,6 +64,7 @@ class EventsController < ApplicationController
 				actual_events = @events.select{|x| (x.date >= @date) && (x.date <= @date + 1.week)}
 			end
 
+				# генерируем повторения (ориентируемся на тип повторения и тип календаря)
 				repeat_events = []
 				@events.select{|x| x.is_repeat}.each do |e|
 					if e.repeat_days.present?
@@ -117,6 +123,7 @@ class EventsController < ApplicationController
 		@event = Event.find(params[:id])
 	end
 	
+	# сюда передаем параметр time_option для редиректа на нужный календарь в экшене create
 	def new
 		@time_option = params[:time_option]
 		@time = params[:time].present? ? params[:time] : Time.zone.parse("00:00:00")
@@ -167,7 +174,7 @@ class EventsController < ApplicationController
 	end
 
 	private
-
+		# метод, копирующий повторяющееся событие для отрисовки его на календаре
 		def new_repeat_event(original, date)
 			if date > original.date.to_date
 				rep_event = Event.new(original.as_json.reject{|key| key == "updated_at" || key == "created_at"})

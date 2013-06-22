@@ -1,5 +1,9 @@
 # encoding: utf-8
 class Event < ActiveRecord::Base
+  # is_repeat - повторяется/не повторяется
+  # repeat_type - тип повторения (по дням недели - 'week', по числам месяца - 'month')
+  # repeat_days - строка с днями недели (сокращенными, на лат.) или с числами месяца,
+  #   разделенными пробелами 
   attr_accessible :description, :date, :time, :is_repeat, :repeat_days, :repeat_type
 
   validates :description, presence: true

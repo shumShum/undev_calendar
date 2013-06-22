@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 
+// отрисовка параметров повтореня для события (если эти параметры были уже заданы ранее)
 $(document).ready(function(e) {
   var source;
   var template;
@@ -32,6 +33,7 @@ $(document).ready(function(e) {
 
 });
 
+//клик по чекбоксу 'Повторять'; появляется селектлист для выбора типа повторения
 $(function() {
   $('#repeat_event').on('click', '#event_is_repeat', function(e) {
     var source;
@@ -57,6 +59,8 @@ $(function() {
   });
 });
 
+// выбор типа повторения;
+// в зависимости от выбора отрисовываются нужные элементы для выбора параметров повторения
 $(function() {
   $('#repeat_event').on('change', '#repeat_of', function(e) {
     var source;
@@ -92,6 +96,8 @@ $(function() {
   });
 });
 
+// грязный хак, замена числового поля ввода на текстовое 
+// для передачи строки с числами повторения контроллеру
 $(function() {
 	$('#commit_event').on('click', ".btn", function() {
 		if ($event.repeat_type === "month") {
@@ -115,6 +121,7 @@ function get_week_days(){
   $event.repeat_days = days_str;
 }
 
+// корректировка и отрисовка строки с числами повторения события
 function add_month_repeat(){
   var arr;
   var value = $('#new_number')[0].value

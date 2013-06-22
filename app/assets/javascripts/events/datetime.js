@@ -4,6 +4,8 @@
 //= require bootstrap-datepicker
 //= require bootstrap-timepicker
 
+// редактирование даты и времени
+
 $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
     var jq = $.noConflict();
     $(this).datepicker({

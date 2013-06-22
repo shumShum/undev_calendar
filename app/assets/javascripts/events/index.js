@@ -1,6 +1,8 @@
 //= require jquery
 //= require jquery_ujs
 
+// отрисовка нужного календаря в зависимости от параметра time_option;
+// выделение типа календаря на панели навигации
 $(document).ready(function(e) {
 	var type = gon.time_option;
 	var source;
