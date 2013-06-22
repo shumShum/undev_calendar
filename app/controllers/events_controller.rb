@@ -59,7 +59,6 @@ class EventsController < ApplicationController
 				actual_events = @events.select{|x| (x.date >= @date) && (x.date <= @date + 1.week)}
 			end
 
-				
 				repeat_events = []
 				@events.select{|x| x.is_repeat}.each do |e|
 					if e.repeat_days.present?
@@ -70,13 +69,13 @@ class EventsController < ApplicationController
 									d_w = (Date::ABBR_DAYNAMES.index(d) - @begin_month_date.wday)%7 + 1
 									n_d = Date.new(@year,@month,d_w)
 									[n_d - 1.week, n_d, n_d + 1.week, n_d + 2.week, n_d + 3.week, n_d + 4.week, n_d + 5.week].each do |dm|
-										repeat_events.push new_repeat_event(e, dm) if dm > e.date.to_date
+										repeat_events.push new_repeat_event(e, dm)
 									end
 								end
-								if (time_option == 'day') && (@date > e.date.to_date)
+								if (time_option == 'day')
 									repeat_events.push new_repeat_event(e, @date) if Date::ABBR_DAYNAMES.index(d) == @date.wday
 								end
-								if (time_option == 'week') && (@date + Date::ABBR_DAYNAMES.index(d).day > e.date.to_date)
+								if (time_option == 'week')
 									add_days = Date::ABBR_DAYNAMES.index(d)
 									add_days = add_days == 0 ? 6 : add_days - 1
 									repeat_events.push new_repeat_event(e, @date + add_days)
@@ -84,13 +83,17 @@ class EventsController < ApplicationController
 							end
 							if e.repeat_type == "month"
 								if time_option == 'month' 
-									n_d = Date.new(@year,@month,d.to_i)
+									begin
+										n_d = Date.new(@year,@month,d.to_i)
+									rescue
+										n_d = Date.new(@year,@month+1,d.to_i)
+									end
 									[n_d, n_d + 1.month].each do |dm|
-										repeat_events.push new_repeat_event(e, dm) if n_d > e.date.to_date
+										repeat_events.push new_repeat_event(e, dm)
 									end
 								end
 								if time_option == 'day'
-									repeat_events.push new_repeat_event(e, @date) if (@day == d.to_i) && (@date > e.date.to_date)
+									repeat_events.push new_repeat_event(e, @date) if (@day == d.to_i)
 								end
 								if (time_option == 'week')
 									days = (@date..@date + 1.week).to_a.map{|x| x.day}
@@ -103,7 +106,7 @@ class EventsController < ApplicationController
 						end
 					end
 				end
-				@events = actual_events + repeat_events	
+				@events = actual_events + repeat_events.compact	
 
 		@month_names = MONTH_NAMES
 		@days_of_week_names = DAYS_OF_WEEK_NAMES	
@@ -123,8 +126,16 @@ class EventsController < ApplicationController
 	def create
 		@event = Event.new(params[:event])
 	  if @event.save
-	  	url = "/events/day/#{@event.date.year}/#{sprintf '%02d', @event.date.month}/#{sprintf '%02d', @event.date.day}" if params[:time_option] == 'day'
-	  	url = "/events/month/#{@event.date.year}/#{sprintf '%02d', @event.date.month}" if params[:time_option] == 'month' || !params[:time_option].present?
+	  	to = params[:time_option]
+	  	year = @event.date.year
+	  	month = @event.date.month
+	  	day = @event.date.day
+	  	if to =~ /week \d{2}/
+	  		week = to.scan(/\d{2}/)[0]	
+	  		url = "/events/week/#{year}/#{week}" 
+	  	end
+	  	url = "/events/day/#{year}/#{sprintf '%02d', month}/#{sprintf '%02d', day}" if to == 'day'
+	  	url = "/events/month/#{year}/#{sprintf '%02d', month}" if to == 'month' || !to.present?
 	    redirect_to url
 	  else
 	    render 'new'
@@ -158,10 +169,14 @@ class EventsController < ApplicationController
 	private
 
 		def new_repeat_event(original, date)
-			rep_event = Event.new(original.as_json.reject{|key| key == "updated_at" || key == "created_at"})
-			rep_event[:id] = original.id
-			rep_event[:date] = date
-			rep_event
+			if date > original.date.to_date
+				rep_event = Event.new(original.as_json.reject{|key| key == "updated_at" || key == "created_at"})
+				rep_event[:id] = original.id
+				rep_event[:date] = date
+				rep_event
+			else
+				nil
+			end
 		end
 
 end

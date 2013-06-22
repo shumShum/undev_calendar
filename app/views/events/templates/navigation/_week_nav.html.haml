@@ -11,5 +11,7 @@
 					= link_to ">", "/events/week/#{(@date + 1.week).year}/01"
 				- else
 					= link_to ">", "/events/week/#{(@date + 1.week).year}/#{sprintf '%02d', @week + 1}"
-		.span2{style: "margin-top: 7px;"}
-			= "#{@date.strftime('%Y-%m-%d')}"
+		.span2{style: "margin-top: 2px;"}
+			= "#{@date.strftime('%d-%m-%Y')}/"
+			%br
+			= "#{(@date+6.day).strftime('%d-%m-%Y')}" 

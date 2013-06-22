@@ -14,7 +14,10 @@
 					%th
 						= "#{sprintf '%02d', h}.00-#{sprintf '%02d', h+1}.00"
 					- @days_of_week_names.each_with_index do |dw, i|
-						%th{style: "background: #FFF"}
+						%th#cell{style: "height: 100%; background: #FFF; vertical-align: top;", 
+										onclick: "location.href = '#{new_event_path(date: @date + i.day, time: h.to_s+':00', time_option: 'week '+ sprintf('%02d', @week))}'", 
+										onmouseover: "$(this).css({'opacity': '0.8', 'cursor' : 'pointer'});", 
+										onmouseout: "$(this).css({'opacity': '1', 'cursor' : 'default'});"}
 							- @events.select{|x| (x.time.hour == h) && (x.date.to_date == @date+i.day)}.sort{|x,y| x.time <=> y.time}.each do |event|
 								.row{style: "margin-left: 0px"}
 									.event-time
